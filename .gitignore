@@ -1,0 +1,31 @@
+# ==========================================
+# 1. PYTHON / FASTAPI (Carpeta broker)
+# ==========================================
+**/venv/
+**/__pycache__/
+**/*.pyc
+**/dist/
+**/build/
+
+# ==========================================
+# 2. NODE.JS (Carpeta productos)
+# ==========================================
+**/node_modules/
+**/dist-ssr/
+*.local
+
+# ==========================================
+# 3. JAVA / SPRING BOOT (Carpeta pedidos)
+# ==========================================
+**/target/
+**/.mvn/
+**/*.class
+.idea/
+*.iml
+.vscode/
+
+# ==========================================
+# 4. CONFIGURACIONES Y CREDENCIALES GLOBALES
+# ==========================================
+# Evita subir los archivos .env reales de cualquier servicio
+**/.env
