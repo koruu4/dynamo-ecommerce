@@ -29,8 +29,13 @@ const Producto = sequelizeDB.define('Producto', {
         allowNull: false,
         defaultValue:0,
         validate:{
-            min:0
+        min:0
         }
+    },
+    activo:{
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
     }
 },{
     tableName: 'productos',

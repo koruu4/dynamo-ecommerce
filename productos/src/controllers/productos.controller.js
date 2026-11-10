@@ -4,7 +4,7 @@ const productoModel = require('../models/productos.model')
 async function buscarPorId(req, res) {
     try {
        const {id}=req.params
-       const producto= await Producto.findByPk(id)
+       const producto = await Producto.findOne({ where: { id, activo: true } })
 
        if(!producto){
             return res.status(404).json({
@@ -24,7 +24,7 @@ async function buscarPorId(req, res) {
 
 async function buscarTodos(req, res) {
     try {
-        const productos = await Producto.findAll()
+        const productos = await Producto.findAll({ where: { activo: true } })
         res.status(200).json(productos)
     } catch (error) {
         console.log(error)
@@ -82,7 +82,7 @@ async function actualizarProducto(req, res) {
     }
 
     try {
-        const producto= await Producto.findByPk(id)
+        const producto= await Producto.findOne({ where: { id, activo: true } })
 
         if (!producto) {
             return res.status(404).json({
@@ -102,22 +102,19 @@ async function actualizarProducto(req, res) {
 
 async function eliminarProducto(req, res) {
     const { id } = req.params
-     try {
-        const producto = await productoModel.findByPk(id)
+    try {
+        const producto = await Producto.findOne({ where: { id, activo: true } })
 
         if (!producto) {
-            return res.status(404).json({
-                error: 'No encontrado'
-            })
+            return res.status(404).json({ error: 'No encontrado' })
         }
 
-        await producto.destroy() //destroy = delete
+        producto.activo = false
+        await producto.save()
         res.status(204).send()
     } catch (error) {
         console.error(error)
-        res.status(500).json({
-            error: 'Error interno del servidor'
-        })
+        res.status(500).json({ error: 'Error interno del servidor' })
     }
 }
 
@@ -126,7 +123,7 @@ async function descontarStock(req, res) {
     const { cantidad } = req.body
 
     try {
-        const producto = await Producto.findByPk(id)
+        const producto = await Producto.findOne({ where: { id, activo: true } })
         if (!producto) {
             return res.status(404).json({ error: 'Producto no encontrado' })
         }
